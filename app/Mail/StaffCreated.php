@@ -19,9 +19,7 @@ class StaffCreated extends Mailable
     public $staff;
     public $temporaryPassword;
 
-    /**
-     * Create a new message instance.
-     */
+ 
     public function __construct($superAdmin,$staff,$temporaryPassword)
     {
         $this->superAdmin = $superAdmin;
@@ -29,9 +27,6 @@ class StaffCreated extends Mailable
         $this->temporaryPassword = $temporaryPassword;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -40,28 +35,16 @@ class StaffCreated extends Mailable
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
+  
     public function content(): Content
     {
         return new Content(
-            markdown: 'view.staff-created',
+            markdown: 'emails.staff-created',
             with : [
                 'name' => $this->staff->name,
                 'email' => $this->staff->email,
                 'password' => $this->temporaryPassword
             ]
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
     }
 }

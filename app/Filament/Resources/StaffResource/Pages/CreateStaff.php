@@ -8,6 +8,10 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
+use App\Mail\StaffCreated;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+
 
 class CreateStaff extends CreateRecord
 {
@@ -21,10 +25,11 @@ class CreateStaff extends CreateRecord
             'password' => Hash::make($temporaryPassword)
         ]));
 
-        $user->temporaryPassword = $temporaryPassword;
-        
-        // Mail::to($user->email)->send(new UserRegistered($user,$temporaryPassword));
-        
+
+        $superAdmin = Auth()->user();
+
+        Mail::to($user->email)->send(new StaffCreated($superAdmin,$user,$temporaryPassword));
+                
         return $user;
 
     }
