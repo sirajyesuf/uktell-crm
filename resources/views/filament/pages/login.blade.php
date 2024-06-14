@@ -1,12 +1,10 @@
-<div class="flex flex-col-reverse md:flex-row">
+<div class="flex">
 
-    <div class="md:basis-1/4 flex flex-col bg-white p-4 gap-16 pt-32 order-2 md:order-1">
+    <div class="basis-1/4 flex flex-col bg-white p-4 gap-16">
 
-        <div class="flex flex-col items-center justify-center">
+        <div class="flex flex-col items-center mt-16">
 
-            <div>
-                <img src="{{asset('img/logo-dark.png')}}" alt="logo" class="w-30 h-20">
-            </div>
+            <img src="{{asset('img/logo-dark.png')}}" alt="logo" class="w-32 h-32">
 
             <p class="text-grey">Sign in to your account</p>
 
@@ -44,7 +42,7 @@
 
     </div>
 
-    <div class="md:basis-3/4 h-64 md:h-screen bg-cover bg-center order-1 md:order-2" style="background-image: url('{{asset('img/billingbooth-2.png')}}');">
+    <div class="basis-3/4 h-dvh bg-cover bg-center" style="background-image: url('{{asset('img/billingbooth-2.png')}}');">
         <!-- This div now has the background image covering the full height of the screen -->
     </div>
     
