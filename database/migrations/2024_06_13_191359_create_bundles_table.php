@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Enums\BundleCategoryEnum;
+use App\Enums\BundleCategory;
 return new class extends Migration
 {
     
@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->string('reference')->unique();
-            $table->enum('category',BundleCategoryEnum::toArray());
+            $table->enum('category',BundleCategory::toArray());
             $table->integer('data_allowance');
             $table->integer('intl_voice_allowance');
             $table->unsignedBigInteger('sell_price');
