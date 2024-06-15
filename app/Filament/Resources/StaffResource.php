@@ -14,14 +14,14 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\Pages\Page;
-
+use Filament\Notifications\Notification;
 
 class StaffResource extends Resource
 {
     protected static ?string $model = Staff::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-users';
-    protected static ?string $recordTitleAttribute = 'Staff';
+    protected static ?string $recordTitleAttribute = 'name';
     protected static ?string $modelLabel = 'Staff';
     protected static ?string $pluralModelLabel = 'Staffs';
 
@@ -48,14 +48,32 @@ class StaffResource extends Resource
                 ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                 ->label('Email Address')
-                ->searchable()
+                ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    Staff::STATUS_ACTIVE => 'success',
+                    Staff::STATUS_SUSPENDED => 'danger',
+                })
             ])
             ->filters([
                 //
             ])
             ->actions([
+
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make()
+
+                Tables\Actions\DeleteAction::make(),
+
+                Tables\Actions\Action::make('Suspend')
+                ->hidden(fn(Staff $record) => !$record->isActive())
+                ->requiresConfirmation()
+                ->action(fn(Staff $record) => StaffResource::suspendStaff($record)),
+
+                Tables\Actions\Action::make('Activate')
+                ->requiresConfirmation()
+                ->hidden(fn(Staff $record) => $record->isActive())
+                ->action(fn(Staff $record) => StaffResource::activateStaff($record))
             ])
             ->bulkActions([
 
@@ -89,5 +107,34 @@ class StaffResource extends Resource
             'edit' => Pages\EditStaff::route('/{record}/edit'),
             'view' => Pages\ViewStaff::route('/{record}/view')
         ]; 
+    }
+
+
+    public static function suspendStaff(Staff $record){
+
+
+        $record->status = Staff::STATUS_SUSPENDED;
+        $record->save();
+
+
+        Notification::make()
+        ->title('Staff suspended.')
+        ->success()
+        ->send();
+
+    }
+
+    public static function activateStaff(Staff $record){
+
+
+        $record->status = Staff::STATUS_ACTIVE;
+        $record->save();
+
+
+        Notification::make()
+        ->title('Staff activated.')
+        ->success()
+        ->send();
+
     }
 }
