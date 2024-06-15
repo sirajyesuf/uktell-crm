@@ -9,13 +9,13 @@ enum BundleCategory: string {
     case Unlimited = 'Unlimited';
 
 
-    public static function toArray()
+    public static function toArray(): array
     {
         return [
-            self::Base,
-            self::Standard,
-            self::Premium,
-            self::Unlimited
+            self::Base->value,
+            self::Standard->value,
+            self::Premium->value,
+            self::Unlimited->value
         ];
     }
 }
