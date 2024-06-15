@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\Pages\Page;
 use Filament\Notifications\Notification;
+use App\Enums\Role;
+use Illuminate\Support\Facades\Auth;
 
 class StaffResource extends Resource
 {
@@ -33,9 +35,13 @@ class StaffResource extends Resource
                 ->label('Full Name')
                 ->required(),
                 Forms\Components\TextInput::make('email')
+                ->unique(Staff::class, 'email', ignoreRecord: true)
                 ->label('Email Address')
+                ->required(),
+                Forms\Components\Select::make('role')
                 ->required()
-                ->unique(),
+                ->options(Role::option())
+
             ]);
     }
 
@@ -54,7 +60,9 @@ class StaffResource extends Resource
                 ->color(fn (string $state): string => match ($state) {
                     Staff::STATUS_ACTIVE => 'success',
                     Staff::STATUS_SUSPENDED => 'danger',
-                })
+                }),
+                Tables\Columns\TextColumn::make('role')
+                ->badge()
             ])
             ->filters([
                 //
@@ -107,6 +115,12 @@ class StaffResource extends Resource
             'edit' => Pages\EditStaff::route('/{record}/edit'),
             'view' => Pages\ViewStaff::route('/{record}/view')
         ]; 
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+        ->where('id','!=',Auth::user()->id);
     }
 
 

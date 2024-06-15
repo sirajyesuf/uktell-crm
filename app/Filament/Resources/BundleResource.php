@@ -19,6 +19,9 @@ class BundleResource extends Resource
     protected static ?string $model = Bundle::class;
 
     protected static ?string $navigationIcon = 'feathericon-package';
+    protected static ?string $navigationGroup = 'Plans';
+    protected static ?int $navigationSort = 1;
+
 
     public static function form(Form $form): Form
     {
@@ -34,8 +37,6 @@ class BundleResource extends Resource
                         Forms\Components\TextInput::make('name')
                         ->required(),
                         Forms\Components\TextInput::make('label')
-                        ->required(),
-                        Forms\Components\TextInput::make('reference')
                         ->required(),
                         Forms\Components\Select::make('validity')
                         ->required()
@@ -107,18 +108,12 @@ class BundleResource extends Resource
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('label'),
                 Tables\Columns\TextColumn::make('reference'),
-                Tables\Columns\TextColumn::make('category')
-                ->badge(),
                 Tables\Columns\TextColumn::make('sell_price'),
                 Tables\Columns\TextColumn::make('buy_price'),
                 Tables\Columns\TextColumn::make('validity'),
                 Tables\Columns\TextColumn::make('voice_allowance'),
                 Tables\Columns\TextColumn::make('sms_allowance'),
                 Tables\Columns\TextColumn::make('data_allowance'),
-
-
-
-
             ])
             ->filters([
                 //
