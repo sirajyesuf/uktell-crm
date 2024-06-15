@@ -58,8 +58,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->darkModeBrandLogo(asset('img/logo-light.png'))
-            ->brandLogo(asset('img/logo-dark.png'))
-            ->brandLogoHeight('3rem')
+            ->brandLogo(asset('img/logo-light.png'))
+            ->brandLogoHeight('5rem')
             ->profile(isSimple:false);
 
     }
