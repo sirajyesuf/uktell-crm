@@ -11,25 +11,35 @@ return new class extends Migration
     {
         Schema::create('bundles', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->string('name')->nullable();
             $table->string('reference')->unique();
-            $table->enum('category',BundleCategory::toArray());
-            $table->integer('data_allowance');
-            $table->integer('intl_voice_allowance');
-            $table->unsignedBigInteger('sell_price');
-            $table->unsignedBigInteger('buy_price');
-            $table->json('features');
-            $table->integer('validity');
-            $table->string('stripe_price_id');
-            $table->string('intl_voice_aoid');
-            $table->string('data_aoid');
-            $table->string('sms_aoid');
-            $table->string('voice_aoid');
-            $table->string('throttled_data_aoid');
+            $table->enum('category',BundleCategory::toArray())->nullable();
+            $table->integer('data_allowance')->nullable();
+            $table->integer('intl_voice_allowance')->nullable();
+            $table->unsignedBigInteger('sell_price')->nullable();
+            $table->unsignedBigInteger('buy_price')->nullable();
+            $table->json('features')->nullable();
+            $table->string('validity')->nullable();
+            $table->string('stripe_price_id')->nullable();
+            $table->string('intl_voice_aoid')->nullable();
+            $table->string('data_aoid')->nullable();
+            $table->string('sms_aoid')->nullable();
+            $table->string('voice_aoid')->nullable();
+            $table->string('throttled_data_aoid')->nullable();
+
+            #########
+            $table->string('label')->nullable();
+            $table->integer('voice_allowance')->nullable();
+            $table->integer('sms_allowance')->nullable();
+
+            
+
+
+            #timestamps
             $table->timestamps();
             $table->softDeletes();
         });
-    }
+    }    
 
   
     public function down(): void
