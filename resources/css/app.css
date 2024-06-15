@@ -1,7 +1,15 @@
 .fi-sidebar-nav {
-    background-color: #149fd8;
+    background-color: #149fd8 !important;
 }
 
+.fi-sidebar-header {
+    background-color: #2f2f2f !important;
+    justify-content: center;
+}
+.fi-logo {
+    justify-content: center;
+    align-items: center;
+}
 .fi-sidebar-group-label{
     color:  white !important;
 
