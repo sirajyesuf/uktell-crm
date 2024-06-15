@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Enums\Role;
 
 #[ObservedBy([UserObserver::class])]
 class User extends Authenticatable
@@ -17,11 +18,7 @@ class User extends Authenticatable
     const STATUS_ACTIVE = 'active';
     const STATUS_SUSPENDED = 'suspended';
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     protected $hidden = [
         'password',
@@ -33,6 +30,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => Role::class
         ];
     }
 
