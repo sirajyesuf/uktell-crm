@@ -12,4 +12,8 @@ class Addon extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'locations' => 'array',
+    ];
 }
