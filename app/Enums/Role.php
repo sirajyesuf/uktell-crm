@@ -1,27 +1,19 @@
 <?php
 namespace App\Enums;
+use Filament\Support\Contracts\HasLabel;
 
-enum Role: string
-{
-    case ADMIN = 'admin';
-    case EDITOR = 'editor';
+enum Role: string implements HasLabel{
+    case ADMIN = 'Admin';
+    case EDITOR = 'Editor';
 
 
-    public static function toArray(): array
+    public function getLabel(): ?string
     {
-        return [
-            self::ADMIN->value,
-            self::EDITOR->value
-        ];
+        return match($this) {
+            self::ADMIN => 'Admin',
+            self::EDITOR => 'Editor',
+        };
     }
 
-    public static function option(): array
-    {
-        $keyValueArray = [];
-        foreach (self::cases() as $case) {
-            $keyValueArray[$case->value] = $case->name;
-        }
 
-        return $keyValueArray;
-    }
 }

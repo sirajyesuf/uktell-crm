@@ -52,7 +52,7 @@ class StaffResource extends Resource
 
                 Forms\Components\Select::make('role')
                 ->required()
-                ->options(Role::option()),
+                ->options(Role::class),
                 Forms\Components\Toggle::make('status')
                 ->onColor('success')
                 ->offColor('danger')
