@@ -1,35 +1,22 @@
 <?php
 namespace App\Enums;
 
-enum BundleCategory: string {
+use Filament\Support\Contracts\HasLabel;
+
+enum BundleCategory: string  implements HasLabel{
 
     case Base = 'Base';
-    case Standard = 'Standard';
-    case Premium = 'Premium';
-    case Unlimited = 'Unlimited';
     case ROAMING = 'Roaming';
     case EXTRA_DATA = 'Extra Data';
     case INTERNATIONAL_MINUTES = 'International Minutes';
 
-
-
-    public static function toArray(): array
+    public function getLabel(): ?string
     {
-        return [
-            self::Base->value,
-            self::ROAMING->value,
-            self::EXTRA_DATA->value,
-            self::INTERNATIONAL_MINUTES->value
-        ];
-    }
-
-    public static function option(): array
-    {
-        $keyValueArray = [];
-        foreach (self::cases() as $case) {
-            $keyValueArray[$case->name] = $case->value;
-        }
-
-        return $keyValueArray;
+        return match($this) {
+            self::Base => 'Base',
+            self::ROAMING => 'Roaming',
+            self::EXTRA_DATA => 'Extra Data',
+            self::INTERNATIONAL_MINUTES => 'International Minutes'
+        };
     }
 }

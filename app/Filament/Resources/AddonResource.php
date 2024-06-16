@@ -40,7 +40,7 @@ class AddonResource extends Resource
                 ->label('Stripe PriceID')
                 ->required(),
                 Forms\Components\Select::make('category')
-                ->options(BundleCategory::option()),
+                ->options(BundleCategory::class),
 
                 Forms\Components\Textarea::make('short_description')
                 ->cols(3)
