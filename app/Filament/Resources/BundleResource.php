@@ -12,8 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Wizard; 
-use App\Enums\BundleValidity;
+use Filament\Resources\Pages\Page;
+
 class BundleResource extends Resource
 {
     protected static ?string $model = Bundle::class;
@@ -27,77 +27,29 @@ class BundleResource extends Resource
     {
         return $form
             ->schema([
-                
-
-            Wizard::make([
-
-                Wizard\Step::make('General')
-                    ->schema([
-
-                        Forms\Components\TextInput::make('name')
-                        ->required(),
-                        Forms\Components\TextInput::make('label')
-                        ->required(),
-                        Forms\Components\Select::make('validity')
-                        ->required()
-                        ->options(BundleValidity::option())
-                        
-                    ]),
-
-                Wizard\Step::make('Details')
-                    ->schema([
-                        Forms\Components\Repeater::make('features')
-                        ->schema([
-                            Forms\Components\TextInput::make('feature')->required(),
-                        ])
-                        ->addActionLabel('Add Feature')
-                    ]),
-
-                Wizard\Step::make('Pricing')
-                    ->schema([
-                        Forms\Components\TextInput::make('sell_price')
-                        ->required()
-                        ->helperText('incl. VAT')
-                        ->hint('Sell Price to all your customers.')
-                        ->integer()
-                        ->minValue(0),
-
-                        Forms\Components\TextInput::make('buy_price')
-                        ->required()
-                        ->hint('The cost to you to provide this service.')
-                        ->integer()
-                        ->minValue(0)
-                    ]),
-
-                Wizard\Step::make('Voice')
-                    ->schema([
-
-                        Forms\Components\TextInput::make('voice_allowance')
-                        ->required()
-                        ->integer()
-                        ->minValue(0),
-
-                    ]),
-
-                    Wizard\Step::make('Text')
-                    ->schema([
-                        Forms\Components\TextInput::make('sms_allowance')
-                        ->integer()
-                        ->minValue(0)
-                        ->required()
-                    ]),
-
-                    Wizard\Step::make('Data')
-                    ->schema([
-                        Forms\Components\TextInput::make('data_allowance')
-                        ->required()
-                        ->integer()
-                        ->minValue(0),
-                    ]),
-
-            ])->columnSpanFull()
-            ->skippable()
-        ]);
+                Forms\Components\TextInput::make('name')
+                ->required(),
+                Forms\Components\TextInput::make('data_allowance')
+                ->integer()
+                ->suffix('GB')
+                ->required(),
+                Forms\Components\TextInput::make('price')
+                ->integer()
+                ->prefix('GBP')
+                ->minValue(0)
+                ->required(),
+                Forms\Components\TextInput::make('stripe_price_id')
+                ->label('Stripe PriceID')
+                ->required(),
+                Forms\Components\Textarea::make('short_description')
+                ->cols(3)
+                ->rows(3)
+                ->required(),
+                Forms\Components\Textarea::make('popupbox_description')
+                ->cols(3)
+                ->rows(3)
+                ->required()
+            ]);
 
     }
 
@@ -107,14 +59,12 @@ class BundleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('label'),
-                Tables\Columns\TextColumn::make('reference'),
-                Tables\Columns\TextColumn::make('sell_price'),
-                Tables\Columns\TextColumn::make('buy_price'),
-                Tables\Columns\TextColumn::make('validity'),
-                Tables\Columns\TextColumn::make('voice_allowance'),
-                Tables\Columns\TextColumn::make('sms_allowance'),
+                Tables\Columns\TextColumn::make('price'),
                 Tables\Columns\TextColumn::make('data_allowance'),
+                Tables\Columns\TextColumn::make('short_description'),
+                Tables\Columns\TextColumn::make('popupbox_description'),
+                Tables\Columns\TextColumn::make('stripe_price_id')
+                ->badge(),
             ])
             ->filters([
                 //
@@ -135,6 +85,15 @@ class BundleResource extends Resource
         return [
             //
         ];
+    }
+
+
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\ViewBundle::class,
+            Pages\EditBundle::class
+        ]);
     }
 
     public static function getPages(): array

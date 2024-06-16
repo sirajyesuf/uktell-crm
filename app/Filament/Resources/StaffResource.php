@@ -25,7 +25,7 @@ class StaffResource extends Resource
     protected static ?string $model = Staff::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-users';
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'first_name';
     protected static ?string $modelLabel = 'Staff';
     protected static ?string $pluralModelLabel = 'Staffs';
 

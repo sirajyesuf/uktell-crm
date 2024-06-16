@@ -18,7 +18,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Pages\Login;
-
+use App\Filament\Pages\MyProfile;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -30,8 +30,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login(Login::class)
             ->colors([
-                // 'primary' => Color::Amber,
                 'primary' => '#149fd8',
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -60,8 +64,7 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('img/logo-light.png'))
             ->brandLogo(asset('img/logo-light.png'))
             ->brandLogoHeight('5rem')
-            ->profile(isSimple:false);
-
+            ->profile(page: MyProfile::class,isSimple:false);
     }
 
 
