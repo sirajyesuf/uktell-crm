@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\BundleCategory;
 use App\Filament\Resources\AddonResource\Pages;
 use App\Filament\Resources\AddonResource\RelationManagers;
 use App\Models\Addon;
@@ -12,107 +13,53 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Wizard; 
-use App\Enums\BundleValidity;
-use Nnjeim\World\World;
+use Filament\Resources\Pages\Page;
+
 
 class AddonResource extends Resource
 {
     protected static ?string $model = Addon::class;
 
-    protected static ?string $navigationIcon = 'iconpark-addone';
+    protected static ?string $navigationIcon = 'heroicon-c-bolt';
     protected static ?string $navigationGroup = 'Plans';
     protected static ?int $navigationSort = 2;
 
 
     public static function form(Form $form): Form
     {
-
-        $world = World::countries()->data;
-
         return $form
             ->schema([
-                
+                Forms\Components\TextInput::make('name')
+                ->required(),
+                Forms\Components\TextInput::make('price')
+                ->integer()
+                ->prefix('GBP')
+                ->minValue(0)
+                ->required(),
+                Forms\Components\TextInput::make('stripe_price_id')
+                ->label('Stripe PriceID')
+                ->required(),
+                Forms\Components\Select::make('category')
+                ->options(BundleCategory::option()),
 
-            Wizard::make([
+                Forms\Components\Textarea::make('short_description')
+                ->cols(3)
+                ->rows(3)
+                ->required(),
+                Forms\Components\Textarea::make('popupbox_description')
+                ->cols(3)
+                ->rows(3)
+                ->required()
+            ]);
 
-                Wizard\Step::make('General')
-                    ->schema([
+    }    public static function option(): array
+    {
+        $keyValueArray = [];
+        foreach (self::cases() as $case) {
+            $keyValueArray[$case->name] = $case->value;
+        }
 
-                        Forms\Components\TextInput::make('name')
-                        ->required(),
-                        Forms\Components\TextInput::make('label')
-                        ->required(),
-                        Forms\Components\Select::make('validity')
-                        ->required()
-                        ->options(BundleValidity::option())
-                        
-                    ]),
-                Wizard\Step::make('Pricing')
-                    ->schema([
-                        Forms\Components\TextInput::make('sell_price')
-                        ->required()
-                        ->helperText('incl. VAT')
-                        ->hint('Sell Price to all your customers.')
-                        ->integer()
-                        ->minValue(0),
-
-                        Forms\Components\TextInput::make('buy_price')
-                        ->required()
-                        ->hint('The cost to you to provide this service.')
-                        ->integer()
-                        ->minValue(0)
-                    ]),
-
-                Wizard\Step::make('Voice')
-                    ->schema([
-
-                        Forms\Components\TextInput::make('voice_allowance')
-                        ->required()
-                        ->integer()
-                        ->minValue(0),
-
-                    ]),
-
-                    Wizard\Step::make('Text')
-                    ->schema([
-                        Forms\Components\TextInput::make('sms_allowance')
-                        ->integer()
-                        ->minValue(0)
-                        ->required()
-                    ]),
-
-                    Wizard\Step::make('Data')
-                    ->schema([
-                        Forms\Components\TextInput::make('data_allowance')
-                        ->required()
-                        ->integer()
-                        ->minValue(0),
-                    ]),
-
-                    Wizard\Step::make('region')
-                    ->schema([
-                        Forms\Components\Select::make('region')
-                        ->required()
-                        ->searchable()
-                        ->preload()
-                        ->options($world->pluck('name','name'))
-                    ]),
-
-                    Wizard\Step::make('locations')
-                    ->schema([
-                        Forms\Components\Select::make('locations')
-                        ->required()
-                        ->multiple()
-                        ->searchable()
-                        ->preload()
-                        ->options($world->pluck('name','name'))
-                    ])
-
-            ])->columnSpanFull()
-            ->skippable()
-        ]);
-
+        return $keyValueArray;
     }
 
     public static function table(Table $table): Table
@@ -121,15 +68,14 @@ class AddonResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('label'),
-                Tables\Columns\TextColumn::make('sell_price'),
-                Tables\Columns\TextColumn::make('buy_price'),
-                Tables\Columns\TextColumn::make('validity'),
-                Tables\Columns\TextColumn::make('voice_allowance'),
-                Tables\Columns\TextColumn::make('sms_allowance'),
-                Tables\Columns\TextColumn::make('data_allowance'),
-                Tables\Columns\TextColumn::make('region')
-                ->badge()
+                Tables\Columns\TextColumn::make('price'),
+                Tables\Columns\TextColumn::make('stripe_price_id'),
+                Tables\Columns\TextColumn::make('short_description'),
+                Tables\Columns\TextColumn::make('popupbox_description'),
+                Tables\Columns\TextColumn::make('category')
+                ->badge(),
+
+
 
             ])
             ->filters([])
@@ -151,6 +97,16 @@ class AddonResource extends Resource
         return [
             //
         ];
+    }
+
+
+
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\ViewAddon::class,
+            Pages\EditAddon::class
+        ]);
     }
 
     public static function getPages(): array
