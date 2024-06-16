@@ -12,6 +12,7 @@ class MyProfile extends EditProfile
     protected function getNameFormComponent(): Component
     {
         return TextInput::make('first_name')
+                ->label('First Name')
                 ->required()
                 ->maxLength(255)
                 ->autofocus();        
@@ -21,6 +22,7 @@ class MyProfile extends EditProfile
     protected function getLastNameFormComponent(): Component
     {
         return TextInput::make('last_name')
+                ->label('Last Name')
                 ->required()
                 ->maxLength(255);
     }
@@ -28,21 +30,12 @@ class MyProfile extends EditProfile
     protected function getPhoneNumberFormComponent(): Component
     {
         return \Ysfkaya\FilamentPhoneInput\Forms\PhoneInput::make('phone_number')
+        ->label('Phone Number')
         ->unique(Staff::class, 'phone_number', ignoreRecord: true)
         ->required();
     }
 
-    protected function getPasswordConfirmationFormComponent(): Component
-    {
-        return TextInput::make('passwordConfirmation')
-            ->label(__('filament-panels::pages/auth/edit-profile.form.password_confirmation.label'))
-            ->password()
-            ->revealable(filament()->arePasswordsRevealable())
-            ->required()
-            ->dehydrated(false);
-    }
-
-
+    
     protected function getForms(): array
     {
         return [

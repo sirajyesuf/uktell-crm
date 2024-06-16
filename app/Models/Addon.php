@@ -13,7 +13,6 @@ class Addon extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'locations' => 'array',
-    ];
+    protected $casts = [];
+    
 }

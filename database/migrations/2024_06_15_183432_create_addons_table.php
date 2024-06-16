@@ -17,8 +17,7 @@ return new class extends Migration
             $table->text('stripe_price_id');
             $table->text('short_description');
             $table->text('popupbox_description');
-            $table->enum('category',BundleCategory::toArray());
-
+            $table->string('category');
             $table->timestamps();
             $table->softDeletes();
         });
