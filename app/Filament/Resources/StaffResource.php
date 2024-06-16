@@ -18,6 +18,8 @@ use Filament\Notifications\Notification;
 use App\Enums\Role;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class StaffResource extends Resource
 {
     protected static ?string $model = Staff::class;
@@ -31,17 +33,30 @@ class StaffResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                ->label('Full Name')
+                Forms\Components\TextInput::make('first_name')
+                ->label('First Name')
                 ->required(),
+
+                Forms\Components\TextInput::make('last_name')
+                ->label('Last Name')
+                ->required(),
+
                 Forms\Components\TextInput::make('email')
                 ->unique(Staff::class, 'email', ignoreRecord: true)
                 ->label('Email Address')
                 ->required(),
+
+                \Ysfkaya\FilamentPhoneInput\Forms\PhoneInput::make('phone_number')
+                ->unique(Staff::class, 'phone_number', ignoreRecord: true)
+                ->required(),
+
                 Forms\Components\Select::make('role')
                 ->required()
-                ->options(Role::option())
-
+                ->options(Role::option()),
+                Forms\Components\Toggle::make('status')
+                ->onColor('success')
+                ->offColor('danger')
+                ->inline(0)
             ]);
     }
 
@@ -49,18 +64,24 @@ class StaffResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                ->label('Full Name')
+                Tables\Columns\TextColumn::make('first_name')
+                ->label('First Name')
                 ->searchable(),
+
+                Tables\Columns\TextColumn::make('last_name')
+                ->label('Last Name')
+                ->searchable(),
+
                 Tables\Columns\TextColumn::make('email')
                 ->label('Email Address')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                ->badge()
-                ->color(fn (string $state): string => match ($state) {
-                    Staff::STATUS_ACTIVE => 'success',
-                    Staff::STATUS_SUSPENDED => 'danger',
-                }),
+
+                \Ysfkaya\FilamentPhoneInput\Tables\PhoneColumn::make('phone_number')->displayFormat(\Ysfkaya\FilamentPhoneInput\PhoneInputNumberType::NATIONAL),
+
+
+                
+                Tables\Columns\ToggleColumn::make('status'),
+
                 Tables\Columns\TextColumn::make('role')
                 ->badge()
             ])
@@ -70,15 +91,19 @@ class StaffResource extends Resource
             ->actions([
 
                 Tables\Actions\ViewAction::make(),
-
+                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
 
                 Tables\Actions\Action::make('Suspend')
+                ->button()
+                ->color('danger')
                 ->hidden(fn(Staff $record) => !$record->isActive())
                 ->requiresConfirmation()
                 ->action(fn(Staff $record) => StaffResource::suspendStaff($record)),
 
                 Tables\Actions\Action::make('Activate')
+                ->button()
+                ->color('success')
                 ->requiresConfirmation()
                 ->hidden(fn(Staff $record) => $record->isActive())
                 ->action(fn(Staff $record) => StaffResource::activateStaff($record))

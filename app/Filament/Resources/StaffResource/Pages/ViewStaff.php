@@ -14,7 +14,6 @@ class ViewStaff extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
 
             Actions\Action::make('Suspend')
             ->hidden(fn(Staff $record) => !$record->isActive())
@@ -24,7 +23,10 @@ class ViewStaff extends ViewRecord
             Actions\Action::make('Activate')
             ->requiresConfirmation()
             ->hidden(fn(Staff $record) => $record->isActive())
-            ->action(fn(Staff $record) => StaffResource::activateStaff($record))
+            ->action(fn(Staff $record) => StaffResource::activateStaff($record)),
+
+            Actions\DeleteAction::make()
+
         ];
     }
 

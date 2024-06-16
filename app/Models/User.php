@@ -9,14 +9,16 @@ use Illuminate\Notifications\Notifiable;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Enums\Role;
+use Filament\Models\Contracts\HasName;
+
 
 #[ObservedBy([UserObserver::class])]
-class User extends Authenticatable
+class User extends Authenticatable implements HasName
 {
     use HasFactory, Notifiable;
 
-    const STATUS_ACTIVE = 'active';
-    const STATUS_SUSPENDED = 'suspended';
+    const STATUS_ACTIVE = true;
+    const STATUS_SUSPENDED = false;
 
     protected $guarded = [];
 
@@ -36,6 +38,11 @@ class User extends Authenticatable
 
     public function isActive()
     {
-        return $this->status === self::STATUS_ACTIVE;
+        return $this->status;
+    }
+
+    public function getFilamentName(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 }
