@@ -35,3 +35,7 @@
 .fi-sidebar-item.fi-active .fi-sidebar-item-button {
     background-color: #2f2f2f !important;
 }
+
+.fi-sidebar-item-button {
+    background-color: #149fd8 !important;
+}
