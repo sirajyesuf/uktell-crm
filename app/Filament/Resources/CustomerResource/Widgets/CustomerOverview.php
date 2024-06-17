@@ -18,4 +18,9 @@ class CustomerOverview extends Widget
         
         $this->activeSubscription = $this->record->activeSubscription();
     }
+
+    public static function canView(): bool
+    {
+        return true;
+    }
 }
