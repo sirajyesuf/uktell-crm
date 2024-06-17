@@ -52,6 +52,9 @@ class StatsOverviewWidget extends BaseWidget
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('info')
                 ->chart([7, 2, 10, 3, 15, 4, 17]),
+            Stat::make('Cost','55k')
+                ->color('info')
+                ->chart([1, 2, 3, 4, 15, 20, 30]),
         ];
     }
 }
