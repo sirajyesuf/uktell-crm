@@ -9,6 +9,10 @@ use App\Enums\SubscriptionStatus;
 
 class CustomerStat extends BaseWidget
 {
+    protected int | string | array $columnSpan = [
+        'md' => 2,
+        'xl' => 6,
+    ];
     protected function getStats(): array
     {
         return [
