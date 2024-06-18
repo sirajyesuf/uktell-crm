@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PaymentResource\Pages;
-use App\Filament\Resources\PaymentResource\RelationManagers;
-use App\Models\Payment;
+use App\Filament\Resources\PortoutRequestResource\Pages;
+use App\Filament\Resources\PortoutRequestResource\RelationManagers;
+use App\Models\PortoutRequest;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +13,14 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PaymentResource extends Resource
+class PortoutRequestResource extends Resource
 {
-    // protected static ?string $model = Payment::class;
+    // protected static ?string $model = PortoutRequest::class;
+    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static ?string $navigationIcon = 'zondicon-dial-pad';
+    protected static ?string $navigationGroup = 'Requests';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -34,7 +37,7 @@ class PaymentResource extends Resource
                 //
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -43,8 +46,6 @@ class PaymentResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -59,18 +60,10 @@ class PaymentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPayments::route('#'),
-            // 'create' => Pages\CreatePayment::route('/create'),
-            // 'view' => Pages\ViewPayment::route('/{record}'),
-            // 'edit' => Pages\EditPayment::route('/{record}/edit'),
+            'index' => Pages\ListPortoutRequests::route('#'),
+            // 'create' => Pages\CreatePortoutRequest::route('/create'),
+            // 'view' => Pages\ViewPortoutRequest::route('/{record}'),
+            // 'edit' => Pages\EditPortoutRequest::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }

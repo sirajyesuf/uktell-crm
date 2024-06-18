@@ -63,7 +63,7 @@ class PortInRequestResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPortInRequests::route('/'),
+            'index' => Pages\ListPortInRequests::route('#'),
             // 'create' => Pages\CreatePortInRequest::route('/create'),
             // 'view' => Pages\ViewPortInRequest::route('/{record}'),
             // 'edit' => Pages\EditPortInRequest::route('/{record}/edit'),
