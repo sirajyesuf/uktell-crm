@@ -9,6 +9,7 @@ class OrdersChart extends ChartWidget
     protected static ?string $heading = 'Orders Per Month';
     protected static ?int $sort = 1;
 
+
     protected function getType(): string
     {
         return 'line';
