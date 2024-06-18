@@ -6,6 +6,7 @@ use App\Filament\Resources\CustomerResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Resources\CustomerResource\Widgets;
+use OpenSpout\Writer\Common\ColumnWidth;
 
 class ViewCustomer extends ViewRecord
 {
@@ -23,7 +24,8 @@ class ViewCustomer extends ViewRecord
         return [
             Widgets\CustomerWallet::class,
             Widgets\CustomerOverview::class,
-            Widgets\SIMInformation::class
+            Widgets\SIMInformation::class,
+            Widgets\SimInformation2::class
         ];
     }
 }
