@@ -59,7 +59,7 @@ class NotificationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListNotifications::route('/'),
+            'index' => Pages\ListNotifications::route('#'),
             // 'create' => Pages\CreateNotification::route('/create'),
             // 'view' => Pages\ViewNotification::route('/{record}'),
             // 'edit' => Pages\EditNotification::route('/{record}/edit'),

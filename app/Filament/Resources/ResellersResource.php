@@ -63,7 +63,7 @@ class ResellersResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListResellers::route('/'),
+            'index' => Pages\ListResellers::route('#'),
             // 'create' => Pages\CreateResellers::route('/create'),
             // 'view' => Pages\ViewResellers::route('/{record}'),
             // 'edit' => Pages\EditResellers::route('/{record}/edit'),

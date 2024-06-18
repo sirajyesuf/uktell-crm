@@ -63,7 +63,7 @@ class SimRequestResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSimRequests::route('/'),
+            'index' => Pages\ListSimRequests::route('#'),
             // 'create' => Pages\CreateSimRequest::route('/create'),
             // 'view' => Pages\ViewSimRequest::route('/{record}'),
             // 'edit' => Pages\EditSimRequest::route('/{record}/edit'),
