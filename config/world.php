@@ -54,7 +54,7 @@ return [
 		'states' => false,
 		'cities' => false,
 		'timezones' => false,
-		'currencies' => false,
+		'currencies' => true,
 		'languages' => false,
 	],
 	/*

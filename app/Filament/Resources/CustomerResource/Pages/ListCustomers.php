@@ -7,7 +7,9 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Resources\CustomerResource\Widgets;
 use Filament\Resources\Components\Tab;
+
 use App\Enums\SubscriptionStatus;
+use Filament\Tables\Actions\ImportAction;
 
 class ListCustomers extends ListRecords
 {
@@ -19,6 +21,7 @@ class ListCustomers extends ListRecords
         return [
             Actions\CreateAction::make()
             ->label('Add Customer'),
+
         ];
     }
 
@@ -35,7 +38,7 @@ class ListCustomers extends ListRecords
             null => Tab::make('All'),
             'Active' => Tab::make()->query(fn ($query) => $query->whereRelation('subscriptions','status',SubscriptionStatus::ACTIVE)),
             'InActive' => Tab::make()->query(fn ($query) => $query->whereRelation('subscriptions','status',SubscriptionStatus::INACTIVE)),
-            'New'   => Tab::make()->query(fn ($query) => $query->doesntHave('subscriptions'))
+            'New Signup'   => Tab::make()->query(fn ($query) => $query->doesntHave('subscriptions'))
         ];
     }
 }
