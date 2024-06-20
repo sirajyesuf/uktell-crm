@@ -11,6 +11,12 @@ use Filament\Resources\Components\Tab;
 use App\Filament\Imports\VoiceInternationalRateImporter;
 use App\Filament\Imports\TextInternationalRateImporter;
 use Filament\Support\Enums\ActionSize;
+use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Get;
 
 class ListInternationalRates extends ListRecords
 {
@@ -68,8 +74,47 @@ class ListInternationalRates extends ListRecords
 
 
             Actions\CreateAction::make()
-            ->label('Add InternationRate'),
-        ];
+            ->label('Add InternationRate')
+            ->form([
+
+                Select::make('type')
+                ->options([
+                    InternationalRate::TYPE_VOICE => 'Voice',
+                    InternationalRate::TYPE_SMS   => 'Text',
+                ])
+                ->live()
+                ->afterStateUpdated(fn (Select $component) => $component
+                    ->getContainer()
+                    ->getComponent('dynamicTypeFields')
+                    ->getChildComponentContainer()
+                    ->fill()),
+    
+                Grid::make(2)
+                    ->schema(fn (Get $get): array => match ($get('type')) {
+                        InternationalRate::TYPE_VOICE => [
+                            TextInput::make('country_code')
+                                ->required(),
+                            TextInput::make('country_name')
+                                ->required(),
+                            TextInput::make('rate')
+                                ->integer()
+                                ->required()
+                                ->suffix('UKP/per min'),
+                        ],
+                        InternationalRate::TYPE_SMS => [
+                            TextInput::make('country_code')
+                                ->required(),
+                            TextInput::make('country_name')
+                                ->required(),
+                            TextInput::make('rate')
+                                ->integer()
+                                ->required()
+                                ->suffix('UKP/per message'),
+                        ],
+                        default => [],
+                    })
+                    ->key('dynamicTypeFields')])->slideOver(),
+            ];
     }
 
 

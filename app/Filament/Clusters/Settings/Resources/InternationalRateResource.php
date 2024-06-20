@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Actions;
 
 class InternationalRateResource extends Resource
 {
@@ -42,13 +43,39 @@ class InternationalRateResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+
+                // Tables\Actions\ViewAction::make()
+                // ->slideOver(),
+                // Tables\Actions\EditAction::make()
+        
+
+                Tables\Actions\EditAction::make()
+                ->form([
+                    Forms\Components\TextInput::make('country_name')
+                        ->required(),
+
+                    Forms\Components\TextInput::make('country_code')
+                    ->required(),
+
+                    Forms\Components\TextInput::make('rate')
+                    ->required()
+                ])
+                ->action(function ($data, $record): void {
+                    
+                    $record->country_name = $data['country_name'];
+                    $record->country_code = $data['country_code'];
+                    $record->rate = $data['rate'];
+                    $record->save();
+
+                })
+                ->slideOver()
+
+
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+                // Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // ])
             ]);
     }
 
@@ -63,9 +90,9 @@ class InternationalRateResource extends Resource
     {
         return [
             'index' => Pages\ListInternationalRates::route('/'),
-            'create' => Pages\CreateInternationalRate::route('/create'),
-            'view' => Pages\ViewInternationalRate::route('/{record}'),
-            'edit' => Pages\EditInternationalRate::route('/{record}/edit'),
+            // 'create' => Pages\CreateInternationalRate::route('/create'),
+            // 'view' => Pages\ViewInternationalRate::route('/{record}'),
+            // 'edit' => Pages\EditInternationalRate::route('/{record}/edit'),
         ];
     }
 }
