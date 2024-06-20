@@ -1,5 +1,9 @@
 .fi-sidebar-nav {
     background-color: #149fd8 !important;
+    row-gap: 0rem !important;
+}
+.fi-sidebar-nav .fi-sidebar-nav-groups {
+    row-gap: 0rem !important;
 }
 
 .fi-sidebar-header {
@@ -10,25 +14,24 @@
     justify-content: center;
     align-items: center;
 }
-.fi-sidebar-group-label{
-    color:  white !important;
-
+.fi-sidebar-group-label {
+    color: white !important;
 }
 .fi-sidebar-item-label {
-    color:  white !important;
+    color: white !important;
 }
 .fi-sidebar-item-icon {
-    color:  white !important;
-
+    color: white !important;
 }
 
 .fi-icon-btn-icon {
-    color:  white !important;
+    color: white !important;
 }
 .fi-topbar.sticky .fi-icon-btn-icon {
     color: #2f2f2f !important;
 }
-.fi-sidebar-item-button:hover,.fi-sidebar-item-button:focus {
+.fi-sidebar-item-button:hover,
+.fi-sidebar-item-button:focus {
     background-color: #2f2f2f !important;
 }
 

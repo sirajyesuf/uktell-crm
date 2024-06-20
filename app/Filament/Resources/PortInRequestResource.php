@@ -19,7 +19,7 @@ class PortInRequestResource extends Resource
 
     protected static ?string $navigationIcon = 'zondicon-dial-pad';
     protected static ?string $navigationGroup = 'Requests';
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
 
 

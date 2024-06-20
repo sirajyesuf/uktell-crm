@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Clusters\Rates\Resources;
 
-use App\Filament\Resources\PortoutRequestResource\Pages;
-use App\Filament\Resources\PortoutRequestResource\RelationManagers;
-use App\Models\PortoutRequest;
+use App\Filament\Clusters\Rates;
+use App\Filament\Clusters\Rates\Resources\RegionResource\Pages;
+use App\Filament\Clusters\Rates\Resources\RegionResource\RelationManagers;
+use App\Models\Region;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,20 +14,19 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PortoutRequestResource extends Resource
+class RegionResource extends Resource
 {
-    // protected static ?string $model = PortoutRequest::class;
-    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $model = Region::class;
 
-    protected static ?string $navigationIcon = 'zondicon-dial-pad';
-    protected static ?string $navigationGroup = 'Requests';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationIcon = 'gmdi-category';
+
+    protected static ?string $cluster = Rates::class;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make("region")
             ]);
     }
 
@@ -34,7 +34,10 @@ class PortoutRequestResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('country_name')
+                ->default('ethiopia'),
+                Tables\Columns\TextColumn::make('country_code')
+                ->default('eth')
             ])
             ->filters([
                 //
@@ -60,10 +63,10 @@ class PortoutRequestResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPortoutRequests::route('#'),
-            // 'create' => Pages\CreatePortoutRequest::route('/create'),
-            // 'view' => Pages\ViewPortoutRequest::route('/{record}'),
-            // 'edit' => Pages\EditPortoutRequest::route('/{record}/edit'),
+            'index' => Pages\ListRegions::route('/'),
+            'create' => Pages\CreateRegion::route('/create'),
+            'view' => Pages\ViewRegion::route('/{record}'),
+            'edit' => Pages\EditRegion::route('/{record}/edit'),
         ];
     }
 }

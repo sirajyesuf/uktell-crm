@@ -20,13 +20,28 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Pages\Login;
 use App\Filament\Pages\MyProfile;
 
+use App\Filament\Pages\HomePageSettings;
+use App\Filament\Resources\AddonResource;
+use App\Filament\Resources\BundleResource;
+use App\Filament\Resources\CategoryResource;
+use App\Filament\Resources\PageResource;
+use App\Filament\Resources\StaffResource;
+use Filament\Navigation\NavigationBuilder;
+use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
+use Filament\Pages\Dashboard;
+use Filament;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
+ 
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
             ->default()
-            // ->sidebarCollapsibleOnDesktop(true)
             ->sidebarFullyCollapsibleOnDesktop()
             ->id('admin')
             ->path('admin')
@@ -68,8 +83,60 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('img/logo-light.png'))
             ->brandLogoHeight('5rem')
             ->profile(page: MyProfile::class,isSimple:false)
-            ->databaseNotifications();
+            ->databaseNotifications()
+            ->navigationItems([
+                NavigationItem::make('Support')
+                    ->url('#')
+                    ->icon('bx-support')
+                    ->group('Ticketing')
+                    ->sort(3),
+                NavigationItem::make('Chat')
+                    ->url('#')
+                    ->icon('heroicon-o-chat-bubble-bottom-center-text')
+                    ->group('Ticketing')
+                    ->sort(3),
+                NavigationItem::make('CDR Report')
+                    ->url('#')
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('Reports')
+                    ->sort(3),
+                NavigationItem::make('Usage Report')
+                    ->url('#')
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('Reports')
+                    ->sort(3),
+                NavigationItem::make('Device Usage Report')
+                    ->url('#')
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('Reports')
+                    ->sort(3),
+                NavigationItem::make('Product Usage Report')
+                    ->url('#')
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('Reports')
+                    ->sort(3),
+                NavigationItem::make('Wallet')
+                    ->icon('heroicon-o-wallet')
+                    ->url('#')
+                    ->sort(1000000),
+                NavigationItem::make('Settings')
+                    ->icon('fas-gear')
+                    ->url('#')
+                    ->sort(1000000),
+                NavigationItem::make('Inventory')
+                    ->icon('fas-warehouse')
+                    ->url('#')
+                    ->sort(1000000)
+            ]);
+            
     }
 
 
+    public function boot(){
+
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::SIDEBAR_FOOTER,
+            fn (): string => Blade::render('@livewire(\'logout\')'),
+        );
+    }
 }
