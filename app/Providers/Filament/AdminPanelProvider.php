@@ -20,13 +20,28 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Pages\Login;
 use App\Filament\Pages\MyProfile;
 
+use App\Filament\Pages\HomePageSettings;
+use App\Filament\Resources\AddonResource;
+use App\Filament\Resources\BundleResource;
+use App\Filament\Resources\CategoryResource;
+use App\Filament\Resources\PageResource;
+use App\Filament\Resources\StaffResource;
+use Filament\Navigation\NavigationBuilder;
+use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
+use Filament\Pages\Dashboard;
+use Filament;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
+ 
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
             ->default()
-            // ->sidebarCollapsibleOnDesktop(true)
             ->sidebarFullyCollapsibleOnDesktop()
             ->id('admin')
             ->path('admin')
@@ -68,8 +83,31 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('img/logo-light.png'))
             ->brandLogoHeight('5rem')
             ->profile(page: MyProfile::class,isSimple:false)
-            ->databaseNotifications();
+            ->databaseNotifications()
+            ->navigationItems([
+                NavigationItem::make('Analytics')
+                    ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('Reports')
+                    ->sort(3),
+                NavigationItem::make('Analytics2')
+                    ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('Reports')
+                    ->sort(3),
+                NavigationItem::make('dashboard2')
+                    ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                    ->sort(1000000)
+            ]);
+            
     }
 
 
+    public function boot(){
+
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::SIDEBAR_FOOTER,
+            fn (): string => Blade::render('@livewire(\'logout\')'),
+        );
+    }
 }

@@ -26,9 +26,7 @@ class StaffResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-circle';
     protected static ?string $recordTitleAttribute = 'first_name';
-    
-    // protected static ?string $modelLabel = 'Staff';
-    // protected static ?string $pluralModelLabel = 'Staffs';
+    protected static ?int $navigationSort = 1000;
 
     public static function form(Form $form): Form
     {
