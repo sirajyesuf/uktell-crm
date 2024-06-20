@@ -14,7 +14,7 @@
         method="post"
         tag="form"
         >
-        {{__('filament-panels::layout.actions.logout.label') }}
+        {{-- {{__('filament-panels::layout.actions.logout.label') }} --}}
         </x-filament::dropdown.list.item>
 
     </div>
