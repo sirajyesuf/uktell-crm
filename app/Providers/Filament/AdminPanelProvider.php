@@ -26,6 +26,8 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            // ->sidebarCollapsibleOnDesktop(true)
+            ->sidebarFullyCollapsibleOnDesktop()
             ->id('admin')
             ->path('admin')
             ->login(Login::class)
@@ -39,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([
                 Pages\Dashboard::class,
             ])
@@ -64,7 +67,8 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('img/logo-light.png'))
             ->brandLogo(asset('img/logo-light.png'))
             ->brandLogoHeight('5rem')
-            ->profile(page: MyProfile::class,isSimple:false);
+            ->profile(page: MyProfile::class,isSimple:false)
+            ->databaseNotifications();
     }
 
 
