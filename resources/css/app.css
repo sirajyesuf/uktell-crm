@@ -45,6 +45,10 @@
 
 
 .fi-dropdown-list-item-icon {
-    width: 3rem;
-    height: 3rem;
+    width: 3rem !important;
+    height: 3rem !important;
+}
+
+.fi-dropdown-list-item-icon:hover {
+    background-color: white;
 }
