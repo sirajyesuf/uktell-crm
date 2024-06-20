@@ -19,7 +19,7 @@ class SimRequestResource extends Resource
 
     protected static ?string $navigationIcon = 'fas-sim-card';
     protected static ?string $navigationGroup = 'Requests';
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
 
 

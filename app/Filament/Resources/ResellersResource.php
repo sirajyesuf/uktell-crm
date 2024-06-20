@@ -18,8 +18,8 @@ class ResellersResource extends Resource
     // protected static ?string $model = Resellers::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
-    protected static ?string $navigationGroup = 'Agent';
-    protected static ?int $navigationSort = 3;
+    // protected static ?string $navigationGroup = 'Agent';
+    protected static ?int $navigationSort = 2;
 
 
 

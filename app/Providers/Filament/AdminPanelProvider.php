@@ -85,18 +85,47 @@ class AdminPanelProvider extends PanelProvider
             ->profile(page: MyProfile::class,isSimple:false)
             ->databaseNotifications()
             ->navigationItems([
-                NavigationItem::make('Analytics')
-                    ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                NavigationItem::make('Support')
+                    ->url('#')
+                    ->icon('bx-support')
+                    ->group('Ticketing')
+                    ->sort(3),
+                NavigationItem::make('Chat')
+                    ->url('#')
+                    ->icon('heroicon-o-chat-bubble-bottom-center-text')
+                    ->group('Ticketing')
+                    ->sort(3),
+                NavigationItem::make('CDR Report')
+                    ->url('#')
                     ->icon('heroicon-o-presentation-chart-line')
                     ->group('Reports')
                     ->sort(3),
-                NavigationItem::make('Analytics2')
-                    ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                NavigationItem::make('Usage Report')
+                    ->url('#')
                     ->icon('heroicon-o-presentation-chart-line')
                     ->group('Reports')
                     ->sort(3),
-                NavigationItem::make('dashboard2')
-                    ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                NavigationItem::make('Device Usage Report')
+                    ->url('#')
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('Reports')
+                    ->sort(3),
+                NavigationItem::make('Product Usage Report')
+                    ->url('#')
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('Reports')
+                    ->sort(3),
+                NavigationItem::make('Wallet')
+                    ->icon('heroicon-o-wallet')
+                    ->url('#')
+                    ->sort(1000000),
+                NavigationItem::make('Settings')
+                    ->icon('fas-gear')
+                    ->url('#')
+                    ->sort(1000000),
+                NavigationItem::make('Inventory')
+                    ->icon('fas-warehouse')
+                    ->url('#')
                     ->sort(1000000)
             ]);
             

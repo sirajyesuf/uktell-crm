@@ -33,17 +33,17 @@ class GeneralResource extends Resource
         return $form
             ->schema([
 
-                    Forms\Components\Select::make('home_country')
-                    ->searchable()
-                    ->preload()
-                    ->options($country)
-                    ->columnSpan(1),
+                Forms\Components\Select::make('home_country')
+                ->searchable()
+                ->preload()
+                ->options($country)
+                ->columnSpan(1),
 
-                    Forms\Components\Select::make('currency')
-                    ->searchable()
-                    ->preload()
-                    ->options($currencies)
-                    ->columnSpan(1),
+                Forms\Components\Select::make('currency')
+                ->searchable()
+                ->preload()
+                ->options($currencies)
+                ->columnSpan(1),
                 
                 forms\Components\Section::make('Rate')
                 ->schema([
@@ -62,7 +62,8 @@ class GeneralResource extends Resource
                     ->prefixIcon('fas-sms')
                     ->integer()
 
-                ])->columnSpan(2)
+                ])
+                ->columnSpan(1/2)
 
             ]);
     }
