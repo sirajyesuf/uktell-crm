@@ -42,3 +42,9 @@
 .fi-sidebar-item-button {
     background-color: #149fd8 !important;
 }
+
+
+.fi-dropdown-list-item-icon {
+    width: 3rem;
+    height: 3rem;
+}

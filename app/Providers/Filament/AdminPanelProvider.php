@@ -118,15 +118,19 @@ class AdminPanelProvider extends PanelProvider
                 NavigationItem::make('Wallet')
                     ->icon('heroicon-o-wallet')
                     ->url('#')
-                    ->sort(1000000),
+                    ->sort(98),
                 NavigationItem::make('Settings')
                     ->icon('fas-gear')
                     ->url('#')
-                    ->sort(1000000),
+                    ->sort(100),
                 NavigationItem::make('Inventory')
                     ->icon('fas-warehouse')
                     ->url('#')
-                    ->sort(1000000)
+                    ->sort(97),
+                NavigationItem::make('Agent')
+                    ->icon('heroicon-o-circle-stack')
+                    ->url('#')
+                    ->sort(99)
             ]);
             
     }
