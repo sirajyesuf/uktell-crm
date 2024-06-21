@@ -49,6 +49,6 @@
     height: 3rem !important;
 }
 
-.fi-dropdown-list-item-icon:hover {
-    background-color: white;
+.fi-dropdown-list-item.fi-dropdown-list-item-color-gray.fi-color-gray:hover{
+    background-color: #149fd8 !important
 }

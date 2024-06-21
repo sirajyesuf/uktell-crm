@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Clusters\Rates;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -24,6 +25,7 @@ use App\Filament\Pages\HomePageSettings;
 use App\Filament\Resources\AddonResource;
 use App\Filament\Resources\BundleResource;
 use App\Filament\Resources\CategoryResource;
+use App\Filament\Resources\CustomerResource;
 use App\Filament\Resources\PageResource;
 use App\Filament\Resources\StaffResource;
 use Filament\Navigation\NavigationBuilder;
@@ -132,6 +134,14 @@ class AdminPanelProvider extends PanelProvider
                     ->url('#')
                     ->sort(99)
             ]);
+
+            
+            
+            
+            
+            
+            
+    
             
     }
 
@@ -142,5 +152,18 @@ class AdminPanelProvider extends PanelProvider
             PanelsRenderHook::SIDEBAR_FOOTER,
             fn (): string => Blade::render('@livewire(\'logout\')'),
         );
+
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::TOPBAR_START,
+            fn (): string => Blade::render($this->uktell()),
+        );
+    }
+
+
+
+    public function uktell(){
+        return '<div style="display: flex; align-items: center; padding: 10px; background-color: #333; color: white;">
+        <p style="margin: 0; font-size: 24px; font-weight: bold; text-transform:capitalize;">ukTell</p>
+    </div>';
     }
 }
